@@ -14,7 +14,7 @@ import java.util.concurrent.ExecutionException;
 import static java.lang.String.format;
 import static java.util.Objects.isNull;
 
-public class KafkaDispatcherImpl<K, V> implements KafkaDispatcher<K, V>, Closeable {
+public class KafkaDispatcherImpl<K, V> implements KafkaDispatcher<K, V> {
 
   private final KafkaProducer<K, V> producer;
 

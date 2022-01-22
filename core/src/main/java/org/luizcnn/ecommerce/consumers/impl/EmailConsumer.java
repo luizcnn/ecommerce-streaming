@@ -1,6 +1,7 @@
-package org.luizcnn.ecommerce.consumers;
+package org.luizcnn.ecommerce.consumers.impl;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.luizcnn.ecommerce.consumers.DefaultConsumer;
 import org.luizcnn.ecommerce.models.Email;
 import org.luizcnn.ecommerce.service.impl.KafkaServiceImpl;
 import org.luizcnn.ecommerce.utils.JsonUtils;
@@ -9,7 +10,7 @@ import java.util.List;
 
 import static org.luizcnn.ecommerce.enums.TopicEnum.ECOMMERCE_SEND_EMAIL;
 
-public class EmailConsumer {
+public class EmailConsumer implements DefaultConsumer {
 
   public static void main(String[] args) {
     final var emailConsumer = new EmailConsumer();
@@ -18,7 +19,8 @@ public class EmailConsumer {
     }
   }
 
-  private void consume(ConsumerRecord<String, byte[]> record) {
+  @Override
+  public void consume(ConsumerRecord<String, byte[]> record) {
     final var email = JsonUtils.readValue(record.value(), Email.class);
     System.out.println("-------------------------------------");
     System.out.println("Processing. Sending email...");
@@ -32,7 +34,8 @@ public class EmailConsumer {
     System.out.println("Email Sent!");
   }
 
-  private List<String> getTopics() {
+  @Override
+  public List<String> getTopics() {
     return List.of(ECOMMERCE_SEND_EMAIL.getTopic());
   }
 
