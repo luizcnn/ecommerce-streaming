@@ -1,5 +1,12 @@
 package org.luizcnn.ecommerce.dispatcher;
 
-public interface KafkaDispatcher<K, V> {
+import java.io.Closeable;
+
+public interface KafkaDispatcher<K, V> extends Closeable {
+
   void send(String topic, K key, V value);
+
+  @Override
+  void close();
+
 }

@@ -1,7 +1,10 @@
-package org.luizcnn.ecommerce.consumers;
+package org.luizcnn.ecommerce.consumers.impl;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.luizcnn.ecommerce.consumers.DefaultConsumer;
+import org.luizcnn.ecommerce.dispatcher.impl.KafkaDispatcherImpl;
 import org.luizcnn.ecommerce.models.Order;
+import org.luizcnn.ecommerce.service.OrderService;
 import org.luizcnn.ecommerce.service.impl.KafkaServiceImpl;
 import org.luizcnn.ecommerce.utils.JsonUtils;
 
@@ -9,16 +12,26 @@ import java.util.List;
 
 import static org.luizcnn.ecommerce.enums.TopicEnum.ECOMMERCE_NEW_ORDER;
 
-public class FraudConsumer {
+public class FraudConsumer implements DefaultConsumer {
+
+  private final OrderService orderService;
+
+  public FraudConsumer(OrderService orderService) {
+    this.orderService = orderService;
+  }
 
   public static void main(String[] args) {
-    final var fraudConsumer = new FraudConsumer();
+    final var orderDispatcher = new KafkaDispatcherImpl<String, byte[]>();
+    final var orderService = new OrderService(orderDispatcher);
+    final var fraudConsumer = new FraudConsumer(orderService);
+
     try(var kafkaService = new KafkaServiceImpl<>(fraudConsumer.getTopics(), fraudConsumer::consume, FraudConsumer.class)) {
       kafkaService.run();
     }
   }
 
-  private void consume(ConsumerRecord<String, byte[]> record) {
+  @Override
+  public void consume(ConsumerRecord<String, byte[]> record) {
     final var order = JsonUtils.readValue(record.value(), Order.class);
     System.out.println("-------------------------------------");
     System.out.println("Processing new order. Checking for fraud");
@@ -27,21 +40,12 @@ public class FraudConsumer {
     System.out.println(record.partition());
     System.out.println(record.offset());
 
-    simulateProcessing();
-
-    System.out.println("Order Processed!");
+    orderService.processOrder(order);
   }
 
-  private List<String> getTopics() {
+  @Override
+  public List<String> getTopics() {
     return List.of(ECOMMERCE_NEW_ORDER.getTopic());
-  }
-
-  private void simulateProcessing() {
-    try {
-      Thread.sleep(4000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
   }
 
 }
