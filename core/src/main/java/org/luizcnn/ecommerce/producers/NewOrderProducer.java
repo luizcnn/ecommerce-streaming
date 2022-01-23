@@ -21,19 +21,18 @@ public class NewOrderProducer {
   }
 
   private static void generateOrders(NewOrderService newOrderService, EmailService emailService) {
-    for(int i = 0; i < 1; i++) {
+    for(int i = 0; i < 5; i++) {
       final var order = getOrder();
       newOrderService.sendToFraudAnalisys(order);
-      emailService.sendEmail(order.getUserId(), order.getOrderId());
+      emailService.sendEmail(order.getEmail(), order.getOrderId());
     }
   }
 
   private static Order getOrder() {
-    final var userId = UUID.randomUUID().toString();
     final var orderId = UUID.randomUUID().toString();
-    final var email = "teste@email.com";
+    final var email = UUID.randomUUID() + "@email.com";
     final var amount = BigDecimal.valueOf((Math.random()*5000) + 1);
 
-    return new Order(userId, orderId, amount, email);
+    return new Order(orderId, amount, email);
   }
 }

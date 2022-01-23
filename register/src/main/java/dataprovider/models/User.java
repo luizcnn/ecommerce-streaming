@@ -13,6 +13,8 @@ import java.util.UUID;
 public class User {
 
   @Id
+  @GeneratedValue(generator = "system-uuid")
+  @GenericGenerator(name = "system-uuid", strategy = "org.hibernate.id.UUIDGenerator")
   private UUID id;
   private String email;
 
