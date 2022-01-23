@@ -1,7 +1,7 @@
-package org.luizcnn.ecommerce.consumers.impl;
+package org.luizcnn.ecommerce.consumers;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.luizcnn.ecommerce.consumers.DefaultConsumer;
+import org.luizcnn.ecommerce.consumer.DefaultConsumer;
 import org.luizcnn.ecommerce.dispatcher.impl.KafkaDispatcherImpl;
 import org.luizcnn.ecommerce.models.Order;
 import org.luizcnn.ecommerce.service.OrderService;
@@ -10,7 +10,7 @@ import org.luizcnn.ecommerce.utils.JsonUtils;
 
 import java.util.List;
 
-import static org.luizcnn.ecommerce.enums.TopicEnum.ECOMMERCE_NEW_ORDER;
+import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_NEW_ORDER;
 
 public class FraudConsumer implements DefaultConsumer {
 

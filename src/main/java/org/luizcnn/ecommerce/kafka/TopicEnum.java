@@ -1,4 +1,4 @@
-package org.luizcnn.ecommerce.enums;
+package org.luizcnn.ecommerce.kafka;
 
 public enum TopicEnum {
 

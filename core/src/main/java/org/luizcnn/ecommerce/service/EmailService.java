@@ -4,7 +4,7 @@ import org.luizcnn.ecommerce.dispatcher.KafkaDispatcher;
 import org.luizcnn.ecommerce.models.Email;
 import org.luizcnn.ecommerce.utils.JsonUtils;
 
-import static org.luizcnn.ecommerce.enums.TopicEnum.ECOMMERCE_SEND_EMAIL;
+import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_SEND_EMAIL;
 
 public class EmailService {
 
