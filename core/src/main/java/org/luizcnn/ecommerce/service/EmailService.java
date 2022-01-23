@@ -16,9 +16,9 @@ public class EmailService {
     this.emailDispatcher = emailDispatcher;
   }
 
-  public void sendEmail(Order order) {
-    final var email = buildEmail(order.getEmail(), order.getOrderId());
-    this.emailDispatcher.send(ECOMMERCE_SEND_EMAIL.getTopic(), order.getUserId(), JsonUtils.writeValueAsBytes(email));
+  public void sendEmail(String userEmail, String orderId) {
+    final var email = buildEmail(userEmail, orderId);
+    this.emailDispatcher.send(ECOMMERCE_SEND_EMAIL.getTopic(), userEmail, JsonUtils.writeValueAsBytes(email));
   }
 
   private Email buildEmail(String userEmail, String orderId) {
