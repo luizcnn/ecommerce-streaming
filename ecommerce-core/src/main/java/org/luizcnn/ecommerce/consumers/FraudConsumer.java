@@ -4,7 +4,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.luizcnn.ecommerce.consumer.DefaultConsumer;
 import org.luizcnn.ecommerce.dispatcher.impl.KafkaDispatcherImpl;
 import org.luizcnn.ecommerce.models.Order;
-import org.luizcnn.ecommerce.service.OrderService;
+import org.luizcnn.ecommerce.service.FraudDetectorService;
 import org.luizcnn.ecommerce.service.impl.KafkaServiceImpl;
 import org.luizcnn.ecommerce.utils.JsonUtils;
 
@@ -14,16 +14,16 @@ import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_NEW_ORDER;
 
 public class FraudConsumer implements DefaultConsumer {
 
-  private final OrderService orderService;
+  private final FraudDetectorService fraudDetectorService;
 
-  public FraudConsumer(OrderService orderService) {
-    this.orderService = orderService;
+  public FraudConsumer(FraudDetectorService fraudDetectorService) {
+    this.fraudDetectorService = fraudDetectorService;
   }
 
   public static void main(String[] args) {
     final var orderDispatcher = new KafkaDispatcherImpl<String, byte[]>();
-    final var orderService = new OrderService(orderDispatcher);
-    final var fraudConsumer = new FraudConsumer(orderService);
+    final var fraudDetectorService = new FraudDetectorService(orderDispatcher);
+    final var fraudConsumer = new FraudConsumer(fraudDetectorService);
 
     try(var kafkaService = new KafkaServiceImpl<>(fraudConsumer.getTopics(), fraudConsumer::consume, FraudConsumer.class)) {
       kafkaService.run();
@@ -40,7 +40,7 @@ public class FraudConsumer implements DefaultConsumer {
     System.out.println(record.partition());
     System.out.println(record.offset());
 
-    orderService.processOrder(order);
+    fraudDetectorService.process(order);
   }
 
   @Override

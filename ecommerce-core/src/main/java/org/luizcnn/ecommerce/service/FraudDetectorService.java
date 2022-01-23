@@ -9,15 +9,15 @@ import java.math.BigDecimal;
 import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_ORDER_APPROVED;
 import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_ORDER_REJECTED;
 
-public class OrderService {
+public class FraudDetectorService {
 
   private final KafkaDispatcher<String, byte[]> orderDispatcher;
 
-  public OrderService(KafkaDispatcher<String, byte[]> orderDispatcher) {
+  public FraudDetectorService(KafkaDispatcher<String, byte[]> orderDispatcher) {
     this.orderDispatcher = orderDispatcher;
   }
 
-  public void processOrder(Order order) {
+  public void process(Order order) {
     this.simulateProcessing();
     if(isFraud(order.getAmount())) {
       System.out.println("Order is a fraud!!! " + order);
