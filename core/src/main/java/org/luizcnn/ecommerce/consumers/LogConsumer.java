@@ -1,8 +1,8 @@
-package org.luizcnn.ecommerce.consumers.impl;
+package org.luizcnn.ecommerce.consumers;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.luizcnn.ecommerce.consumers.DefaultConsumer;
-import org.luizcnn.ecommerce.enums.TopicEnum;
+import org.luizcnn.ecommerce.consumer.DefaultConsumer;
+import org.luizcnn.ecommerce.kafka.TopicEnum;
 import org.luizcnn.ecommerce.service.impl.KafkaServiceImpl;
 
 import java.nio.charset.StandardCharsets;

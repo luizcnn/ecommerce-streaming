@@ -4,7 +4,7 @@ import org.luizcnn.ecommerce.dispatcher.KafkaDispatcher;
 import org.luizcnn.ecommerce.models.Order;
 import org.luizcnn.ecommerce.utils.JsonUtils;
 
-import static org.luizcnn.ecommerce.enums.TopicEnum.ECOMMERCE_NEW_ORDER;
+import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_NEW_ORDER;
 
 public class NewOrderService {
 

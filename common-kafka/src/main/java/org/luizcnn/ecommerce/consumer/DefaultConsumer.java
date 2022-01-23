@@ -1,4 +1,4 @@
-package org.luizcnn.ecommerce.consumers;
+package org.luizcnn.ecommerce.consumer;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 

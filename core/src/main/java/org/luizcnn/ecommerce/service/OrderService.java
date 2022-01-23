@@ -6,8 +6,8 @@ import org.luizcnn.ecommerce.utils.JsonUtils;
 
 import java.math.BigDecimal;
 
-import static org.luizcnn.ecommerce.enums.TopicEnum.ECOMMERCE_ORDER_APPROVED;
-import static org.luizcnn.ecommerce.enums.TopicEnum.ECOMMERCE_ORDER_REJECTED;
+import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_ORDER_APPROVED;
+import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_ORDER_REJECTED;
 
 public class OrderService {
 

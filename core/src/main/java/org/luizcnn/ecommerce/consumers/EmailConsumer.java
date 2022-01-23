@@ -1,14 +1,14 @@
-package org.luizcnn.ecommerce.consumers.impl;
+package org.luizcnn.ecommerce.consumers;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.luizcnn.ecommerce.consumers.DefaultConsumer;
+import org.luizcnn.ecommerce.consumer.DefaultConsumer;
 import org.luizcnn.ecommerce.models.Email;
 import org.luizcnn.ecommerce.service.impl.KafkaServiceImpl;
 import org.luizcnn.ecommerce.utils.JsonUtils;
 
 import java.util.List;
 
-import static org.luizcnn.ecommerce.enums.TopicEnum.ECOMMERCE_SEND_EMAIL;
+import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_SEND_EMAIL;
 
 public class EmailConsumer implements DefaultConsumer {
 

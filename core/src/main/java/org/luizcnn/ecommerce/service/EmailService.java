@@ -2,9 +2,10 @@ package org.luizcnn.ecommerce.service;
 
 import org.luizcnn.ecommerce.dispatcher.KafkaDispatcher;
 import org.luizcnn.ecommerce.models.Email;
+import org.luizcnn.ecommerce.models.Order;
 import org.luizcnn.ecommerce.utils.JsonUtils;
 
-import static org.luizcnn.ecommerce.enums.TopicEnum.ECOMMERCE_SEND_EMAIL;
+import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_SEND_EMAIL;
 
 public class EmailService {
 
@@ -15,14 +16,14 @@ public class EmailService {
     this.emailDispatcher = emailDispatcher;
   }
 
-  public void sendEmail(String userId, String orderId) {
-    final var email = buildEmail(orderId);
-    this.emailDispatcher.send(ECOMMERCE_SEND_EMAIL.getTopic(), userId, JsonUtils.writeValueAsBytes(email));
+  public void sendEmail(Order order) {
+    final var email = buildEmail(order.getEmail(), order.getOrderId());
+    this.emailDispatcher.send(ECOMMERCE_SEND_EMAIL.getTopic(), order.getUserId(), JsonUtils.writeValueAsBytes(email));
   }
 
-  private Email buildEmail(String orderId) {
+  private Email buildEmail(String userEmail, String orderId) {
     final var subject = "Processing order with id: " + orderId;
-    final var body = "Thank you for your order! We are processing your request.";
+    final var body = String.format( "Thank you for your order %s! We are processing your request.", userEmail);
 
     return new Email(subject, body);
   }

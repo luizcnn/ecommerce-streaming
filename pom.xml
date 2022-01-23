@@ -11,6 +11,7 @@
     <modules>
         <module>common-kafka</module>
         <module>core</module>
+        <module>register</module>
     </modules>
 
     <properties>
