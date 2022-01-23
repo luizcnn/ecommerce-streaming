@@ -12,6 +12,7 @@
         <module>common-kafka</module>
         <module>ecommerce-core</module>
         <module>ecommerce-register</module>
+        <module>ecommerce-http</module>
     </modules>
 
     <properties>
