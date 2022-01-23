@@ -2,7 +2,6 @@ package org.luizcnn.ecommerce.service;
 
 import org.luizcnn.ecommerce.dispatcher.KafkaDispatcher;
 import org.luizcnn.ecommerce.models.Email;
-import org.luizcnn.ecommerce.models.Order;
 import org.luizcnn.ecommerce.utils.JsonUtils;
 
 import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_SEND_EMAIL;
