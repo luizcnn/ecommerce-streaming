@@ -15,7 +15,7 @@ public class NewOrderService {
   }
 
   public void sendToFraudAnalisys(Order order) {
-    this.newOrderDispatcher.send(ECOMMERCE_NEW_ORDER.getTopic(), order.getUserId(), JsonUtils.writeValueAsBytes(order));
+    this.newOrderDispatcher.send(ECOMMERCE_NEW_ORDER.getTopic(), order.getEmail(), JsonUtils.writeValueAsBytes(order));
   }
 
 }

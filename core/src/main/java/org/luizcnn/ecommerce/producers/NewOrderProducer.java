@@ -6,6 +6,7 @@ import org.luizcnn.ecommerce.service.EmailService;
 import org.luizcnn.ecommerce.service.NewOrderService;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.UUID;
 
 public class NewOrderProducer {
@@ -21,19 +22,19 @@ public class NewOrderProducer {
   }
 
   private static void generateOrders(NewOrderService newOrderService, EmailService emailService) {
-    for(int i = 0; i < 5; i++) {
+    for(int i = 0; i < 10; i++) {
       final var order = getOrder();
       newOrderService.sendToFraudAnalisys(order);
-      emailService.sendEmail(order);
+      emailService.sendEmail(order.getEmail(), order.getOrderId());
     }
   }
 
   private static Order getOrder() {
-    final var userId = UUID.randomUUID().toString();
-    final var orderId = UUID.randomUUID().toString();
-    final var email = userId + "@email.com";
-    final var amount = BigDecimal.valueOf((Math.random()*5000) + 1);
 
-    return new Order(userId, orderId, amount, email);
+    final var orderId = UUID.randomUUID().toString();
+    final var email = UUID.randomUUID() + "@email.com";
+    final var amount = BigDecimal.valueOf((Math.random()*5000) + 1).setScale(2, RoundingMode.FLOOR);
+
+    return new Order(email, orderId, amount);
   }
 }
