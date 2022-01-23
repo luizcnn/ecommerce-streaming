@@ -8,8 +8,10 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.luizcnn.ecommerce.consumer.DefaultConsumer;
 import org.luizcnn.ecommerce.service.impl.KafkaServiceImpl;
 import org.luizcnn.ecommerce.utils.JsonUtils;
+import utils.JPAUtils;
 
 import java.util.List;
+import java.util.UUID;
 
 import static java.lang.String.format;
 import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_NEW_ORDER;
@@ -44,7 +46,7 @@ public class CreateUsersConsumer implements DefaultConsumer {
     final var email = order.getEmail();
 
     if(isNewUser(email)) {
-      userService.save(new User(email));
+      userService.save(new User(UUID.fromString(order.getUserId()), email));
       System.out.println(format("User %s successfully added", email));
     } else {
       System.out.println(format("User %s already exists", email));

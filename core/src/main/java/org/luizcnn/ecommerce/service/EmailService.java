@@ -15,14 +15,14 @@ public class EmailService {
     this.emailDispatcher = emailDispatcher;
   }
 
-  public void sendEmail(String userEmail, String orderId) {
-    final var email = buildEmail(userEmail, orderId);
-    this.emailDispatcher.send(ECOMMERCE_SEND_EMAIL.getTopic(), userEmail, JsonUtils.writeValueAsBytes(email));
+  public void sendEmail(String userId, String orderId) {
+    final var email = buildEmail(orderId);
+    this.emailDispatcher.send(ECOMMERCE_SEND_EMAIL.getTopic(), userId, JsonUtils.writeValueAsBytes(email));
   }
 
-  private Email buildEmail(String userEmail, String orderId) {
+  private Email buildEmail(String orderId) {
     final var subject = "Processing order with id: " + orderId;
-    final var body = String.format("Thank you for your order %s! We are processing your request.", userEmail);
+    final var body = "Thank you for your order! We are processing your request.";
 
     return new Email(subject, body);
   }

@@ -10,16 +10,22 @@ import static java.lang.String.format;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Order {
 
+  private String userId;
   private String email;
   private String orderId;
   private BigDecimal amount;
 
   public Order() {}
 
-  public Order(String orderId, BigDecimal amount, String email) {
+  public Order(String userId, String orderId, BigDecimal amount, String email) {
+    this.userId = userId;
     this.orderId = orderId;
     this.amount = amount;
     this.email = email;
+  }
+
+  public String getUserId() {
+    return userId;
   }
 
   public String getOrderId() {
@@ -37,6 +43,8 @@ public class Order {
   @Override
   public String toString() {
     final var formattedAmount = this.amount.setScale(2, RoundingMode.FLOOR);
-    return format("Order: id(%s) | email(%s) | amount(R$ %s)", this.orderId, this.email, formattedAmount);
+    return format("Order: id(%s) | userId(%s) | email(%s) | amount(R$ %s)",
+            this.orderId, this.userId, this.email, formattedAmount
+    );
   }
 }

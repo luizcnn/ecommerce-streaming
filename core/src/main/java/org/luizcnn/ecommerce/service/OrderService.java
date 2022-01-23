@@ -42,6 +42,6 @@ public class OrderService {
   }
 
   private void send(String topic, Order order) {
-    orderDispatcher.send(topic, order.getEmail(), JsonUtils.writeValueAsBytes(order));
+    orderDispatcher.send(topic, order.getUserId(), JsonUtils.writeValueAsBytes(order));
   }
 }
