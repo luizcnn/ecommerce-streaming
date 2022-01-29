@@ -10,7 +10,6 @@ public class EmailService {
 
   public final KafkaDispatcher<String, byte[]> emailDispatcher;
 
-
   public EmailService(KafkaDispatcher<String, byte[]> emailDispatcher) {
     this.emailDispatcher = emailDispatcher;
   }

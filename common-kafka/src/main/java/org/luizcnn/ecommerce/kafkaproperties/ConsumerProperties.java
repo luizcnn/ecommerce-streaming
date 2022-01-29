@@ -12,7 +12,7 @@ import static java.util.Objects.isNull;
 
 public final class ConsumerProperties {
 
-  private final static String SERVER_ADDRESS = "127.0.0.1:9092";
+  private static final String SERVER_ADDRESS = "127.0.0.1:9092";
 
   private ConsumerProperties() {}
 

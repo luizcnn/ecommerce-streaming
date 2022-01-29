@@ -9,7 +9,8 @@ import java.util.Properties;
 
 public final class ProducerProperties {
 
-  private final static String SERVER_ADDRESS = "127.0.0.1:9092";
+  private static final String SERVER_ADDRESS = "127.0.0.1:9092";
+  private static final String ACKS_CONFIG_VALUE  = "all";
 
   private ProducerProperties() {}
 
@@ -25,6 +26,7 @@ public final class ProducerProperties {
     properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, SERVER_ADDRESS);
     properties.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
     properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, ByteArraySerializer.class.getName());
+    properties.setProperty(ProducerConfig.ACKS_CONFIG, ACKS_CONFIG_VALUE);
 
     return properties;
   }
