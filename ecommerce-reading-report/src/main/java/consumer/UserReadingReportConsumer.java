@@ -22,8 +22,10 @@ public class UserReadingReportConsumer implements DefaultConsumer {
   public static void main(String[] args) {
     final var reportService = new UserReportService();
     final var readingReportConsumer = new UserReadingReportConsumer(reportService);
-
-    try(var kafkaService = new KafkaServiceImpl<>(readingReportConsumer.getTopics(), readingReportConsumer::consume, UserReadingReportConsumer.class)) {
+    final var kafkaService = new KafkaServiceImpl<>(
+            readingReportConsumer.getTopics(), readingReportConsumer::consume, UserReadingReportConsumer.class
+    );
+    try(kafkaService) {
       kafkaService.run();
     }
   }
