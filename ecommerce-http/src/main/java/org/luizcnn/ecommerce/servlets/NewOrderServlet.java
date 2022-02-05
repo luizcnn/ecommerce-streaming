@@ -27,18 +27,26 @@ public class NewOrderServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-    final var newOrderService = new NewOrderService(orderDispatcher);
-    final var emailService = new EmailService(emailDispatcher);
+    final var order = getOrder(req);
+    process(order);
 
+    System.out.println("New order sent successfully.");
+    resp.setStatus(HttpServletResponse.SC_OK);
+    resp.getWriter().println("New order " + order.getOrderId() +" sent successfully.");
+  }
+
+  private Order getOrder(HttpServletRequest req) {
     final var email = req.getParameter("email");
     final var amount = req.getParameter("amount");
     final var orderId = UUID.randomUUID().toString();
-    final var order = new Order(email, orderId, new BigDecimal(amount));
 
+    return new Order(email, orderId, new BigDecimal(amount));
+  }
+
+  private void process(Order order) {
+    final var newOrderService = new NewOrderService(orderDispatcher);
+    final var emailService = new EmailService(emailDispatcher);
     newOrderService.sendToFraudAnalisys(order);
-    emailService.sendEmail(email, orderId);
-    System.out.println("New order sent successfully.");
-    resp.setStatus(HttpServletResponse.SC_OK);
-    resp.getWriter().println("New order " + orderId +" sent successfully.");
+    emailService.sendEmail(order);
   }
 }
