@@ -32,7 +32,6 @@ public class UserReadingReportConsumer implements DefaultConsumer {
 
   @Override
   public void consume(ConsumerRecord<String, byte[]> record) {
-    final var userString = new String(record.value());
     final var user = JsonUtils.readValue(record.value(), User.class);
     System.out.println("-------------------------------------");
     System.out.println("Processing report for " + user.getEmail());

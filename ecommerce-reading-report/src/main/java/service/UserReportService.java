@@ -10,7 +10,7 @@ import static java.lang.String.format;
 
 public class UserReportService {
 
-  private static final Path SOURCE = Path.of("src", "main", "resources");
+  private static final Path SOURCE = Path.of("src", "main", "resources", "report.txt");
 
   public void process(User user) {
     final var target = new File(user.getReportPath());

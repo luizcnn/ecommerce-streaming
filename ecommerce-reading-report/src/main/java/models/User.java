@@ -31,6 +31,6 @@ public class User {
   }
 
   public String getReportPath() {
-    return String.format("target/%s-report.txt", this.id);
+    return String.format("target/%s-report.txt", this.getId());
   }
 }
