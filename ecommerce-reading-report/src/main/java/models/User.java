@@ -4,10 +4,26 @@ import java.util.UUID;
 
 public class User {
 
-  private final UUID id;
+  private UUID id;
+  private String email;
 
-  public User(UUID id) {
+  public User() {}
+
+  public User(UUID id, String email) {
     this.id = id;
+    this.email = email;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public String getEmail() {
+    return email;
   }
 
   public UUID getId() {

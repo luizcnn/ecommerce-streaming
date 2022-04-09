@@ -15,7 +15,7 @@ public class UserReportService {
   public void process(User user) {
     final var target = new File(user.getReportPath());
     IO.copyTo(SOURCE, target);
-    IO.append(target, format("Created for: %s", user.getId()));
+    IO.append(target, format("Created for: %s", user.getEmail()));
 
     System.out.println(format("File created: %s", target.getAbsolutePath()));
   }
