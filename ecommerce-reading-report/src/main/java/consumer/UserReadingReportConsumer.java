@@ -9,7 +9,7 @@ import service.UserReportService;
 
 import java.util.List;
 
-import static org.luizcnn.ecommerce.kafka.TopicEnum.USER_GENERATE_READING_REPORT;
+import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_USER_GENERATE_READING_REPORT;
 
 public class UserReadingReportConsumer implements DefaultConsumer {
 
@@ -42,7 +42,7 @@ public class UserReadingReportConsumer implements DefaultConsumer {
 
   @Override
   public List<String> getTopics() {
-    return List.of(USER_GENERATE_READING_REPORT.getTopic());
+    return List.of(ECOMMERCE_USER_GENERATE_READING_REPORT.getTopic());
   }
 
 }

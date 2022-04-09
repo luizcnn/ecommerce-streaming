@@ -10,7 +10,7 @@ import producers.UsersToReportProducer;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-import static org.luizcnn.ecommerce.kafka.TopicEnum.SEND_MESSAGE_TO_ALL_USERS;
+import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_SEND_MESSAGE_TO_ALL_USERS;
 
 public class BatchSendReportConsumer implements DefaultConsumer {
 
@@ -47,6 +47,6 @@ public class BatchSendReportConsumer implements DefaultConsumer {
 
   @Override
   public List<String> getTopics() {
-    return List.of(SEND_MESSAGE_TO_ALL_USERS.getTopic());
+    return List.of(ECOMMERCE_SEND_MESSAGE_TO_ALL_USERS.getTopic());
   }
 }
