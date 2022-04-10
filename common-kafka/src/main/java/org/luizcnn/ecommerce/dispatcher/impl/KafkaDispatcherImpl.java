@@ -3,13 +3,14 @@ package org.luizcnn.ecommerce.dispatcher.impl;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.KafkaException;
 import org.luizcnn.ecommerce.kafkaproperties.ProducerProperties;
 import org.luizcnn.ecommerce.dispatcher.KafkaDispatcher;
 
-import java.io.Closeable;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import static java.lang.String.format;
 import static java.util.Objects.isNull;
@@ -29,10 +30,15 @@ public class KafkaDispatcherImpl<K, V> implements KafkaDispatcher<K, V> {
   @Override
   public void send(String topic, K key, V value) {
     try {
-      producer.send(buildRecord(topic, key, value), getCallback()).get();
+      sendAsync(topic, key, value).get();
     } catch (InterruptedException | ExecutionException e) {
       throw new KafkaException(format("Fail to send message: Topic: %s | Message: %s", topic, value));
     }
+  }
+
+  @Override
+  public Future<RecordMetadata> sendAsync(String topic, K key, V value) {
+    return producer.send(buildRecord(topic, key, value), getCallback());
   }
 
   @Override
@@ -44,7 +50,7 @@ public class KafkaDispatcherImpl<K, V> implements KafkaDispatcher<K, V> {
     return new ProducerRecord<>(topic, key, value);
   }
 
-  private Callback getCallback() {
+  private static Callback getCallback() {
     return (data, error) -> {
       if (isNull(error)) {
         final var successMsg = "Topic: %s | Partition: %s | Offset: %s | datSent: %s";

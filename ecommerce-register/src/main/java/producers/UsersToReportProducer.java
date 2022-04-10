@@ -12,7 +12,7 @@ public class UsersToReportProducer {
   private final KafkaDispatcher<String, byte[]> usersDispatcher = new KafkaDispatcherImpl<>();
 
   public void process(List<User> users, String topic) {
-    users.forEach(user -> usersDispatcher.send(topic, user.getEmail(), JsonUtils.writeValueAsBytes(user)));
+    users.forEach(user -> usersDispatcher.sendAsync(topic, user.getEmail(), JsonUtils.writeValueAsBytes(user)));
   }
 
 }

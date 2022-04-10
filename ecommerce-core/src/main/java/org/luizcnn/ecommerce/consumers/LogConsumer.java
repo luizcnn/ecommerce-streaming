@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class LogConsumer implements DefaultConsumer {
+public class LogConsumer extends DefaultConsumer {
 
   public static void main(String[] args) {
     final var logConsumer = new LogConsumer();
@@ -33,6 +33,13 @@ public class LogConsumer implements DefaultConsumer {
   public List<String> getTopics() {
     return Stream.of(TopicEnum.values())
             .map(TopicEnum::getTopic)
+            .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<String> getDLQ() {
+    return Stream.of(TopicEnum.values())
+            .map(TopicEnum::getDLQTopic)
             .collect(Collectors.toList());
   }
 

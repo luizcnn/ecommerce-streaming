@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_USER_GENERATE_READING_REPORT;
 
-public class UserReadingReportConsumer implements DefaultConsumer {
+public class UserReadingReportConsumer extends DefaultConsumer {
 
   private final UserReportService userReportService;
 
@@ -32,17 +32,27 @@ public class UserReadingReportConsumer implements DefaultConsumer {
 
   @Override
   public void consume(ConsumerRecord<String, byte[]> record) {
-    final var user = JsonUtils.readValue(record.value(), User.class);
-    System.out.println("-------------------------------------");
-    System.out.println("Processing report for " + user.getEmail());
+    try {
+      final var user = JsonUtils.readValue(record.value(), User.class);
+      System.out.println("-------------------------------------");
+      System.out.println("Processing report for " + user.getEmail());
 
-    userReportService.process(user);
+      userReportService.process(user);
+    } catch (Exception e) {
+      e.printStackTrace();
+      sendDLQ(record);
+    }
 
   }
 
   @Override
   public List<String> getTopics() {
     return List.of(ECOMMERCE_USER_GENERATE_READING_REPORT.getTopic());
+  }
+
+  @Override
+  public List<String> getDLQ() {
+    return List.of(ECOMMERCE_USER_GENERATE_READING_REPORT.getDLQTopic());
   }
 
 }
