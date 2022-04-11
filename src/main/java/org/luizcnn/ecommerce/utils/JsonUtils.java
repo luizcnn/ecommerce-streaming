@@ -23,7 +23,7 @@ public final class JsonUtils {
     try {
       return JsonUtils.getInstance().readValue(bytes, clazz);
     } catch (IOException e) {
-      throw new BytesToObjectException("Cannot deserialize bytes into " + clazz.getSimpleName());
+      throw new BytesToObjectException("Cannot deserialize bytes into " + clazz.getName(), e);
     }
   }
 

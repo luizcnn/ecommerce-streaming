@@ -13,6 +13,7 @@
         <module>ecommerce-core</module>
         <module>ecommerce-register</module>
         <module>ecommerce-http</module>
+        <module>ecommerce-reading-report</module>
     </modules>
 
     <properties>

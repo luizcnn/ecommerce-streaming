@@ -2,6 +2,7 @@ package org.luizcnn.ecommerce.service;
 
 import org.luizcnn.ecommerce.dispatcher.KafkaDispatcher;
 import org.luizcnn.ecommerce.models.Email;
+import org.luizcnn.ecommerce.models.Order;
 import org.luizcnn.ecommerce.utils.JsonUtils;
 
 import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_SEND_EMAIL;
@@ -14,8 +15,9 @@ public class EmailService {
     this.emailDispatcher = emailDispatcher;
   }
 
-  public void sendEmail(String userEmail, String orderId) {
-    final var email = buildEmail(userEmail, orderId);
+  public void sendEmail(Order order) {
+    final var userEmail = order.getEmail();
+    final var email = buildEmail(userEmail, order.getOrderId());
     this.emailDispatcher.send(ECOMMERCE_SEND_EMAIL.getTopic(), userEmail, JsonUtils.writeValueAsBytes(email));
   }
 

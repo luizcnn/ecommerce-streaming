@@ -6,6 +6,7 @@ import utils.JPAUtils;
 
 import javax.persistence.EntityManager;
 import java.math.BigInteger;
+import java.util.List;
 
 public class UserDaoPostgres implements UserDao {
 
@@ -27,6 +28,14 @@ public class UserDaoPostgres implements UserDao {
     em.getTransaction().begin();
     em.persist(user);
     em.getTransaction().commit();
+  }
+
+  @Override
+  public List<User> findAll() {
+    final String sql = "SELECT * FROM USERS";
+
+    return (List<User>) em.createNativeQuery(sql, User.class)
+            .getResultList();
   }
 
 }
