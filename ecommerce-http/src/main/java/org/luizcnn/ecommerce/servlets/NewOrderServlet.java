@@ -3,7 +3,6 @@ package org.luizcnn.ecommerce.servlets;
 import org.luizcnn.ecommerce.dispatcher.KafkaDispatcher;
 import org.luizcnn.ecommerce.dispatcher.impl.KafkaDispatcherImpl;
 import org.luizcnn.ecommerce.models.Order;
-import org.luizcnn.ecommerce.service.EmailService;
 import org.luizcnn.ecommerce.service.NewOrderService;
 
 import javax.servlet.http.HttpServlet;
@@ -16,13 +15,11 @@ import java.util.UUID;
 public class NewOrderServlet extends HttpServlet {
 
   private final KafkaDispatcher<String, byte[]> orderDispatcher = new KafkaDispatcherImpl<>();
-  private final KafkaDispatcher<String, byte[]> emailDispatcher = new KafkaDispatcherImpl<>();
 
   @Override
   public void destroy() {
     super.destroy();
     orderDispatcher.close();
-    emailDispatcher.close();
   }
 
   @Override
@@ -45,8 +42,6 @@ public class NewOrderServlet extends HttpServlet {
 
   private void process(Order order) {
     final var newOrderService = new NewOrderService(orderDispatcher);
-    final var emailService = new EmailService(emailDispatcher);
     newOrderService.sendToFraudAnalisys(order);
-    emailService.sendEmail(order);
   }
 }

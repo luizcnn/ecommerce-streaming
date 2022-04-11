@@ -14,6 +14,8 @@
         <module>ecommerce-register</module>
         <module>ecommerce-http</module>
         <module>ecommerce-reading-report</module>
+        <module>ecommerce-new-order-email</module>
+        <module>ecommerce-email-sender</module>
     </modules>
 
     <properties>

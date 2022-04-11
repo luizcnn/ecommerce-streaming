@@ -1,10 +1,9 @@
-package org.luizcnn.ecommerce.consumers;
+package org.luizcnn.ecommerce;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.luizcnn.ecommerce.consumer.DefaultConsumer;
-import org.luizcnn.ecommerce.dispatcher.KafkaDispatcher;
+import org.luizcnn.ecommerce.consumer.ServiceRunner;
 import org.luizcnn.ecommerce.models.Email;
-import org.luizcnn.ecommerce.service.impl.KafkaServiceImpl;
 import org.luizcnn.ecommerce.utils.JsonUtils;
 
 import java.util.List;
@@ -14,10 +13,7 @@ import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_SEND_EMAIL;
 public class EmailConsumer extends DefaultConsumer {
 
   public static void main(String[] args) {
-    final var emailConsumer = new EmailConsumer();
-    try(var kafkaService = new KafkaServiceImpl<>(emailConsumer.getTopics(), emailConsumer::consume, EmailConsumer.class)) {
-      kafkaService.run();
-    }
+    new ServiceRunner(EmailConsumer::new).start(5);
   }
 
   @Override

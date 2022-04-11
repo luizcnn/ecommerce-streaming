@@ -1,4 +1,4 @@
-package org.luizcnn.ecommerce.models;
+package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

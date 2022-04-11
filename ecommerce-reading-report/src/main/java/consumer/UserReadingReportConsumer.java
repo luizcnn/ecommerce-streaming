@@ -3,7 +3,7 @@ package consumer;
 import models.User;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.luizcnn.ecommerce.consumer.DefaultConsumer;
-import org.luizcnn.ecommerce.service.impl.KafkaServiceImpl;
+import org.luizcnn.ecommerce.consumer.ServiceRunner;
 import org.luizcnn.ecommerce.utils.JsonUtils;
 import service.UserReportService;
 
@@ -21,13 +21,9 @@ public class UserReadingReportConsumer extends DefaultConsumer {
 
   public static void main(String[] args) {
     final var reportService = new UserReportService();
-    final var readingReportConsumer = new UserReadingReportConsumer(reportService);
-    final var kafkaService = new KafkaServiceImpl<>(
-            readingReportConsumer.getTopics(), readingReportConsumer::consume, UserReadingReportConsumer.class
-    );
-    try(kafkaService) {
-      kafkaService.run();
-    }
+    new ServiceRunner(
+            () -> new UserReadingReportConsumer(reportService)
+    ).start(5);
   }
 
   @Override
