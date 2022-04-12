@@ -3,8 +3,8 @@ package consumer;
 import models.Order;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.luizcnn.ecommerce.consumer.DefaultConsumer;
+import org.luizcnn.ecommerce.consumer.ServiceRunner;
 import org.luizcnn.ecommerce.dispatcher.impl.KafkaDispatcherImpl;
-import org.luizcnn.ecommerce.service.impl.KafkaServiceImpl;
 import org.luizcnn.ecommerce.utils.JsonUtils;
 import services.EmailService;
 
@@ -19,10 +19,9 @@ public class NewOrderEmailConsumer extends DefaultConsumer {
   public static void main(String[] args) {
     final var emailDispatcher = new KafkaDispatcherImpl<String, byte[]>();
     final var emailService = new EmailService(emailDispatcher);
-    final var newOrderEmailConsumer = new NewOrderEmailConsumer(emailService);
-    try(var kafkaService = new KafkaServiceImpl<>(newOrderEmailConsumer.getTopics(), newOrderEmailConsumer::consume, NewOrderEmailConsumer.class)) {
-      kafkaService.run();
-    }
+    new ServiceRunner(
+            () -> new NewOrderEmailConsumer(emailService)
+    ).start(1);
   }
 
   public NewOrderEmailConsumer(EmailService emailService) {

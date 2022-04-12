@@ -1,9 +1,9 @@
-package org.luizcnn.ecommerce.service.impl;
+package org.luizcnn.ecommerce.consumer.service.impl;
 
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.luizcnn.ecommerce.consumer.service.KafkaService;
 import org.luizcnn.ecommerce.kafkaproperties.ConsumerProperties;
-import org.luizcnn.ecommerce.service.ConsumerFunction;
-import org.luizcnn.ecommerce.service.KafkaService;
+import org.luizcnn.ecommerce.consumer.service.ConsumerFunction;
 
 import java.io.Closeable;
 import java.time.Duration;

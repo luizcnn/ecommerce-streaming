@@ -6,7 +6,7 @@ import dataprovider.models.Order;
 import dataprovider.models.User;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.luizcnn.ecommerce.consumer.DefaultConsumer;
-import org.luizcnn.ecommerce.service.impl.KafkaServiceImpl;
+import org.luizcnn.ecommerce.consumer.ServiceRunner;
 import org.luizcnn.ecommerce.utils.JsonUtils;
 
 import java.util.List;
@@ -25,15 +25,9 @@ public class CreateUsersConsumer extends DefaultConsumer {
   public static void main(String[] args) {
     final var userDao = new UserDaoPostgres();
     final var userService = new UserService(userDao);
-    final var createUsersConsumer = new CreateUsersConsumer(userService);
-
-    final var createUsersService = new KafkaServiceImpl<>(
-            createUsersConsumer.getTopics(), createUsersConsumer::consume, CreateUsersConsumer.class
-    );
-
-    try(createUsersService) {
-      createUsersService.run();
-    }
+    new ServiceRunner(
+            () -> new CreateUsersConsumer(userService)
+    ).start(1);
   }
 
   @Override

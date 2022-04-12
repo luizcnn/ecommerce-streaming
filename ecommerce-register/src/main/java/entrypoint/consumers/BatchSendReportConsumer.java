@@ -4,7 +4,7 @@ import core.service.UserService;
 import dataprovider.dao.impl.UserDaoPostgres;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.luizcnn.ecommerce.consumer.DefaultConsumer;
-import org.luizcnn.ecommerce.service.impl.KafkaServiceImpl;
+import org.luizcnn.ecommerce.consumer.ServiceRunner;
 import producers.UsersToReportProducer;
 
 import java.nio.charset.StandardCharsets;
@@ -26,15 +26,9 @@ public class BatchSendReportConsumer extends DefaultConsumer {
     final var userDao = new UserDaoPostgres();
     final var userService = new UserService(userDao);
     final var usersToReportProducer = new UsersToReportProducer();
-    final var batchSendReportConsumer = new BatchSendReportConsumer(userService, usersToReportProducer);
-
-    final var batchSendReportService = new KafkaServiceImpl<>(
-            batchSendReportConsumer.getTopics(), batchSendReportConsumer::consume, BatchSendReportConsumer.class
-    );
-
-    try(batchSendReportService) {
-      batchSendReportService.run();
-    }
+    new ServiceRunner(
+            () -> new BatchSendReportConsumer(userService, usersToReportProducer)
+    ).start(1);
   }
 
   @Override

@@ -2,10 +2,10 @@ package org.luizcnn.ecommerce.consumers;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.luizcnn.ecommerce.consumer.DefaultConsumer;
+import org.luizcnn.ecommerce.consumer.ServiceRunner;
 import org.luizcnn.ecommerce.dispatcher.impl.KafkaDispatcherImpl;
 import org.luizcnn.ecommerce.models.Order;
 import org.luizcnn.ecommerce.service.FraudDetectorService;
-import org.luizcnn.ecommerce.service.impl.KafkaServiceImpl;
 import org.luizcnn.ecommerce.utils.JsonUtils;
 
 import java.util.List;
@@ -23,11 +23,9 @@ public class FraudConsumer extends DefaultConsumer {
   public static void main(String[] args) {
     final var orderDispatcher = new KafkaDispatcherImpl<String, byte[]>();
     final var fraudDetectorService = new FraudDetectorService(orderDispatcher);
-    final var fraudConsumer = new FraudConsumer(fraudDetectorService);
-
-    try(var kafkaService = new KafkaServiceImpl<>(fraudConsumer.getTopics(), fraudConsumer::consume, FraudConsumer.class)) {
-      kafkaService.run();
-    }
+    new ServiceRunner(
+            () -> new FraudConsumer(fraudDetectorService)
+    ).start(1);
   }
 
   @Override

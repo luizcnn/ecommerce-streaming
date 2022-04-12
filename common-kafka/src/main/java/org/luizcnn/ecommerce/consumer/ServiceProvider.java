@@ -1,6 +1,6 @@
 package org.luizcnn.ecommerce.consumer;
 
-import org.luizcnn.ecommerce.service.impl.KafkaServiceImpl;
+import org.luizcnn.ecommerce.consumer.service.impl.KafkaServiceImpl;
 
 import java.util.concurrent.Callable;
 
