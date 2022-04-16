@@ -1,7 +1,7 @@
-import entrypoint.consumers.BatchSendReportConsumer;
-import entrypoint.consumers.CreateUsersConsumer;
-import entrypoint.consumers.OrderApprovedConsumer;
-import entrypoint.consumers.OrderRejectedConsumer;
+import consumers.BatchSendReportConsumer;
+import consumers.CreateUsersConsumer;
+import consumers.OrderApprovedConsumer;
+import consumers.OrderRejectedConsumer;
 
 public class CoreApplication {
 

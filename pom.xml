@@ -17,6 +17,7 @@
         <module>ecommerce-email-sender</module>
         <module>ecommerce-logger</module>
         <module>ecommerce-fraud-detector</module>
+        <module>ecommerce-core-module</module>
     </modules>
 
     <properties>

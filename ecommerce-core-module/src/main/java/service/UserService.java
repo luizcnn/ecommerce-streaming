@@ -1,4 +1,4 @@
-package core.service;
+package service;
 
 import dataprovider.dao.UserDao;
 import dataprovider.models.UserEntity;

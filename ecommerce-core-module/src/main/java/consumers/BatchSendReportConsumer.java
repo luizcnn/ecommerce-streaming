@@ -1,16 +1,15 @@
-package entrypoint.consumers;
+package consumers;
 
-import core.service.UserService;
 import dataprovider.dao.impl.UserDaoPostgres;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.luizcnn.ecommerce.consumer.DefaultConsumer;
 import org.luizcnn.ecommerce.consumer.ServiceRunner;
+import org.luizcnn.ecommerce.kafka.TopicEnum;
 import producers.UsersToReportProducer;
+import service.UserService;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-
-import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_SEND_MESSAGE_TO_ALL_USERS;
 
 public class BatchSendReportConsumer extends DefaultConsumer {
 
@@ -46,11 +45,11 @@ public class BatchSendReportConsumer extends DefaultConsumer {
 
   @Override
   public List<String> getTopics() {
-    return List.of(ECOMMERCE_SEND_MESSAGE_TO_ALL_USERS.getTopic());
+    return List.of(TopicEnum.ECOMMERCE_SEND_MESSAGE_TO_ALL_USERS.getTopic());
   }
 
   @Override
   public List<String> getDLQ() {
-    return List.of(ECOMMERCE_SEND_MESSAGE_TO_ALL_USERS.getDLQTopic());
+    return List.of(TopicEnum.ECOMMERCE_SEND_MESSAGE_TO_ALL_USERS.getDLQTopic());
   }
 }

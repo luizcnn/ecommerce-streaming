@@ -1,5 +1,6 @@
 package consumers;
 
+import dataprovider.dao.impl.OrderDaoPostgres;
 import models.Order;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.luizcnn.ecommerce.consumer.DefaultConsumer;
@@ -7,6 +8,7 @@ import org.luizcnn.ecommerce.consumer.ServiceRunner;
 import org.luizcnn.ecommerce.dispatcher.impl.KafkaDispatcherImpl;
 import org.luizcnn.ecommerce.utils.JsonUtils;
 import service.FraudDetectorService;
+import service.OrderService;
 
 import java.util.List;
 
@@ -21,8 +23,10 @@ public class FraudConsumer extends DefaultConsumer {
   }
 
   public static void main(String[] args) {
+    final var orderDao = new OrderDaoPostgres();
     final var orderDispatcher = new KafkaDispatcherImpl<String, byte[]>();
-    final var fraudDetectorService = new FraudDetectorService(orderDispatcher);
+    final var orderService = new OrderService(orderDao);
+    final var fraudDetectorService = new FraudDetectorService(orderDispatcher, orderService);
     new ServiceRunner(
             () -> new FraudConsumer(fraudDetectorService)
     ).start(1);

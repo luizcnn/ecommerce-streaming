@@ -1,7 +1,9 @@
-package core.service;
+package service;
 
 import dataprovider.dao.OrderDao;
 import dataprovider.models.OrderEntity;
+
+import java.util.UUID;
 
 public class OrderService {
 
@@ -13,6 +15,10 @@ public class OrderService {
 
   public void saveOrder(OrderEntity order) {
     orderDao.saveOrder(order);
+  }
+
+  public Boolean existsById(UUID orderId) {
+    return orderDao.existsById(orderId);
   }
 
 }

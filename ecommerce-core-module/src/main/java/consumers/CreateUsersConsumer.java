@@ -1,18 +1,18 @@
-package entrypoint.consumers;
+package consumers;
 
-import core.service.UserService;
 import dataprovider.dao.impl.UserDaoPostgres;
 import dataprovider.models.UserEntity;
-import vo.OrderVO;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.luizcnn.ecommerce.consumer.DefaultConsumer;
 import org.luizcnn.ecommerce.consumer.ServiceRunner;
+import org.luizcnn.ecommerce.kafka.TopicEnum;
 import org.luizcnn.ecommerce.utils.JsonUtils;
+import service.UserService;
+import vo.OrderVO;
 
 import java.util.List;
 
 import static java.lang.String.format;
-import static org.luizcnn.ecommerce.kafka.TopicEnum.ECOMMERCE_NEW_ORDER;
 
 public class CreateUsersConsumer extends DefaultConsumer {
 
@@ -52,12 +52,12 @@ public class CreateUsersConsumer extends DefaultConsumer {
 
   @Override
   public List<String> getTopics() {
-    return List.of(ECOMMERCE_NEW_ORDER.getTopic());
+    return List.of(TopicEnum.ECOMMERCE_NEW_ORDER.getTopic());
   }
 
   @Override
   public List<String> getDLQ() {
-    return List.of(ECOMMERCE_NEW_ORDER.getDLQTopic());
+    return List.of(TopicEnum.ECOMMERCE_NEW_ORDER.getDLQTopic());
   }
 
   private boolean isNewUser(String email) {
