@@ -10,7 +10,6 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>common-kafka</module>
-        <module>ecommerce-core</module>
         <module>ecommerce-http</module>
         <module>ecommerce-reading-report</module>
         <module>ecommerce-new-order-email</module>
