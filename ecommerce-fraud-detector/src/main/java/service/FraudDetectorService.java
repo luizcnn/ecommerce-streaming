@@ -1,7 +1,7 @@
-package org.luizcnn.ecommerce.service;
+package service;
 
+import models.Order;
 import org.luizcnn.ecommerce.dispatcher.KafkaDispatcher;
-import org.luizcnn.ecommerce.models.Order;
 import org.luizcnn.ecommerce.utils.JsonUtils;
 
 import java.math.BigDecimal;

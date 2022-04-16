@@ -11,11 +11,12 @@
     <modules>
         <module>common-kafka</module>
         <module>ecommerce-core</module>
-        <module>ecommerce-register</module>
         <module>ecommerce-http</module>
         <module>ecommerce-reading-report</module>
         <module>ecommerce-new-order-email</module>
         <module>ecommerce-email-sender</module>
+        <module>ecommerce-logger</module>
+        <module>ecommerce-fraud-detector</module>
     </modules>
 
     <properties>

@@ -1,5 +1,3 @@
-package org.luizcnn.ecommerce.consumers;
-
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.luizcnn.ecommerce.consumer.DefaultConsumer;
 import org.luizcnn.ecommerce.consumer.ServiceRunner;

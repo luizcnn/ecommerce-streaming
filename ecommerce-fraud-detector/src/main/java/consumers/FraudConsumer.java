@@ -1,12 +1,12 @@
-package org.luizcnn.ecommerce.consumers;
+package consumers;
 
+import models.Order;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.luizcnn.ecommerce.consumer.DefaultConsumer;
 import org.luizcnn.ecommerce.consumer.ServiceRunner;
 import org.luizcnn.ecommerce.dispatcher.impl.KafkaDispatcherImpl;
-import org.luizcnn.ecommerce.models.Order;
-import org.luizcnn.ecommerce.service.FraudDetectorService;
 import org.luizcnn.ecommerce.utils.JsonUtils;
+import service.FraudDetectorService;
 
 import java.util.List;
 
