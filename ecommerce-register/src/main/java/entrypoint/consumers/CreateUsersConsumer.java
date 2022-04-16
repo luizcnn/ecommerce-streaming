@@ -2,8 +2,8 @@ package entrypoint.consumers;
 
 import core.service.UserService;
 import dataprovider.dao.impl.UserDaoPostgres;
-import dataprovider.models.Order;
-import dataprovider.models.User;
+import dataprovider.models.UserEntity;
+import vo.OrderVO;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.luizcnn.ecommerce.consumer.DefaultConsumer;
 import org.luizcnn.ecommerce.consumer.ServiceRunner;
@@ -33,13 +33,13 @@ public class CreateUsersConsumer extends DefaultConsumer {
   @Override
   public void consume(ConsumerRecord<String, byte[]> record) {
     try {
-      final var order = JsonUtils.readValue(record.value(), Order.class);
+      final var order = JsonUtils.readValue(record.value(), OrderVO.class);
       System.out.println("-------------------------------------");
       System.out.println("Processing. Checking for new user");
       final var email = order.getEmail();
 
       if(isNewUser(email)) {
-        userService.save(new User(email));
+        userService.save(new UserEntity(email));
         System.out.println(format("User %s successfully added", email));
       } else {
         System.out.println(format("User %s already exists", email));

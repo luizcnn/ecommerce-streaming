@@ -1,7 +1,7 @@
 package core.service;
 
 import dataprovider.dao.UserDao;
-import dataprovider.models.User;
+import dataprovider.models.UserEntity;
 
 import java.util.List;
 
@@ -17,12 +17,15 @@ public class UserService {
     return userDao.existsUserBy(email);
   }
 
-  public void save(User user) {
-    userDao.save(user);
+  public void save(UserEntity userEntity) {
+    userDao.save(userEntity);
   }
 
-  public List<User> findAll() {
+  public List<UserEntity> findAll() {
     return userDao.findAll();
   }
 
+  public UserEntity findByEmail(String email) {
+    return userDao.findByEmail(email);
+  }
 }
